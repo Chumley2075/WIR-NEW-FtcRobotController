@@ -102,6 +102,17 @@ public class wirTeleop extends LinearOpMode {
                 robot.rightArm.setPower(0);
             }
 
+            if (gamepad2.y){
+                robot.claw1.setDirection(Servo.Direction.FORWARD);
+                robot.claw2.setDirection(Servo.Direction.FORWARD);
+            }else if (gamepad2.a){
+                robot.claw1.setDirection(Servo.Direction.REVERSE);
+                robot.claw2.setDirection(Servo.Direction.REVERSE);
+            }else {
+                robot.claw1.setPosition(0);
+                robot.claw2.setPosition(0);
+            }
+
 
 
             // Output the safe vales to the motor drives.

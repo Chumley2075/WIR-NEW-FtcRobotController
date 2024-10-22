@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /*
  * This file works in conjunction with the External Hardware Class sample called: ConceptExternalHardwareClass.java
@@ -63,6 +64,8 @@ public class wirHardware {
      public DcMotorEx rightBack;
      public DcMotorEx leftArm;
      public DcMotorEx rightArm;
+     public Servo claw1;
+     public Servo claw2;
     // Define a constructor that allows the OpMode to pass a reference to itself.
     HardwareMap hwMap           =  null;
     /**
@@ -80,6 +83,9 @@ public class wirHardware {
         leftBack  = hwMap.get(DcMotorEx.class, "leftBack");
         rightBack = hwMap.get(DcMotorEx.class, "rightBack");
         rightArm   = hwMap.get(DcMotorEx.class, "rightArm");
+        claw1 = hwMap.get(Servo.class, "claw1");
+        claw2 = hwMap.get(Servo.class, "claw2");
+
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
@@ -90,18 +96,25 @@ public class wirHardware {
         leftArm.setDirection(DcMotorEx.Direction.FORWARD);
         rightArm.setDirection(DcMotorEx.Direction.FORWARD);
 
+        claw1.setDirection(Servo.Direction.FORWARD);
+        claw2.setDirection(Servo.Direction.FORWARD);
+
         leftFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         rightFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         rightBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         leftArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         rightArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-leftFront.setPower(0);
+        leftFront.setPower(0);
         leftBack.setPower(0);
         rightFront.setPower(0);
         rightBack.setPower(0);
         leftArm.setPower(0);
         rightArm.setPower(0);
+
+        claw1.setPosition(0);
+        claw2.setPosition(0);
+        
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         // leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         // rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
