@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -66,6 +67,8 @@ public class wirHardware {
      public DcMotorEx rightArm;
      public Servo claw1;
      public Servo claw2;
+    public DcMotorEx pivot1;
+
     // Define a constructor that allows the OpMode to pass a reference to itself.
     HardwareMap hwMap           =  null;
     /**
@@ -85,6 +88,7 @@ public class wirHardware {
         rightArm   = hwMap.get(DcMotorEx.class, "rightArm");
         claw1 = hwMap.get(Servo.class, "claw1");
         claw2 = hwMap.get(Servo.class, "claw2");
+        pivot1 = hwMap.get(DcMotorEx.class, "pivot1");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -99,12 +103,15 @@ public class wirHardware {
         claw1.setDirection(Servo.Direction.FORWARD);
         claw2.setDirection(Servo.Direction.FORWARD);
 
+        pivot1.setDirection(DcMotorSimple.Direction.FORWARD);
+
         leftFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         rightFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         rightBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         leftArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         rightArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        pivot1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftFront.setPower(0);
         leftBack.setPower(0);
         rightFront.setPower(0);
@@ -114,6 +121,8 @@ public class wirHardware {
 
         claw1.setPosition(0);
         claw2.setPosition(0);
+
+        pivot1.setPower(0);
         
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         // leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
