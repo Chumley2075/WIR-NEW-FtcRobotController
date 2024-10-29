@@ -71,7 +71,7 @@ public class wirTeleop extends LinearOpMode {
         robot.pivot1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         // Wait for the game to start (driver presses START)
         waitForStart();
-
+        robot.pivot1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
@@ -128,15 +128,13 @@ public class wirTeleop extends LinearOpMode {
             }
 
             if (gamepad2.dpad_right){
-                robot.pivot1.setPower(.5);
-                robot.pivot1.setTargetPosition(1000);
+                robot.pivot1.setPower(1);
+                robot.pivot1.setTargetPosition(40);
                 robot.pivot1.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             }else if (gamepad2.dpad_left){
-                robot.pivot1.setPower(-.5);
+                robot.pivot1.setPower(1);
                 robot.pivot1.setTargetPosition(0);
                 robot.pivot1.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-            }else {
-                robot.pivot1.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
             }
 
 
@@ -147,8 +145,8 @@ public class wirTeleop extends LinearOpMode {
             robot.leftBack.setPower(left);
             robot.rightBack.setPower(right);
             // Send telemetry message to signify robot running
-            telemetry.addData("left",  "%.2f", left);
-            telemetry.addData("right", "%.2f", right);
+            telemetry.addData("ticks", robot.pivot1.getTargetPosition());
+            telemetry.addData("current",robot.pivot1.getCurrentPosition());
             telemetry.update();
 
         }

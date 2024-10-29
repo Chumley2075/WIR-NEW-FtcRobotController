@@ -102,7 +102,7 @@ public class wirHardware {
 
         claw1.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        pivot1.setDirection(DcMotorEx.Direction.FORWARD);
+        pivot1.setDirection(DcMotorEx.Direction.REVERSE);
 
         leftFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -124,6 +124,7 @@ public class wirHardware {
         pivot1.setPower(0);
 
         pivot1.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        pivot1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         // leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
