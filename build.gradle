@@ -11,7 +11,11 @@ buildscript {
     }
     dependencies {
         // Note for FTC Teams: Do not modify this yourself.
+<<<<<<< Updated upstream
         classpath 'com.android.tools.build:gradle:7.3.1'
+=======
+        classpath 'com.android.tools.build:gradle:8.7.1'
+>>>>>>> Stashed changes
     }
 }
 
