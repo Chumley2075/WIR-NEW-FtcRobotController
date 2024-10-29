@@ -68,6 +68,7 @@ public class wirTeleop extends LinearOpMode {
         telemetry.addData(">", "Robot Ready.  Press START.");    //
         telemetry.update();
         robot.init(hardwareMap);
+        robot.pivot1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         // Wait for the game to start (driver presses START)
         waitForStart();
 
@@ -105,22 +106,37 @@ public class wirTeleop extends LinearOpMode {
             }
 
             if (gamepad2.y){
-                robot.claw1.setDirection(Servo.Direction.FORWARD);
-                robot.claw2.setDirection(Servo.Direction.FORWARD);
+                robot.claw1.setPower(.5);
             }else if (gamepad2.a){
-                robot.claw1.setDirection(Servo.Direction.REVERSE);
-                robot.claw2.setDirection(Servo.Direction.REVERSE);
+                robot.claw1.setPower(-.5);
             }else {
-                robot.claw1.setPosition(0);
-                robot.claw2.setPosition(0);
+                robot.claw1.setPower(0);
             }
 
             if (gamepad2.right_bumper) {
-                robot.pivot1.setDirection(DcMotorSimple.Direction.FORWARD);
+                robot.pivot1.setPower(.5);
             }else if (gamepad2.left_bumper){
-                robot.pivot1.setDirection(DcMotorSimple.Direction.REVERSE);
+                robot.pivot1.setPower(-.5);
             }else {
                 robot.pivot1.setPower(0);
+            }
+
+            if (gamepad2.x){
+                robot.claw2.setPosition(.5);
+            }else if (gamepad2.b){
+                robot.claw2.setPosition(0);
+            }
+
+            if (gamepad2.dpad_right){
+                robot.pivot1.setPower(.5);
+                robot.pivot1.setTargetPosition(1000);
+                robot.pivot1.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            }else if (gamepad2.dpad_left){
+                robot.pivot1.setPower(-.5);
+                robot.pivot1.setTargetPosition(0);
+                robot.pivot1.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+            }else {
+                robot.pivot1.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
             }
 
 
@@ -139,3 +155,5 @@ public class wirTeleop extends LinearOpMode {
     }
 }
 
+//left in 1
+//right in 0

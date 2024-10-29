@@ -65,7 +65,7 @@ public class wirHardware {
      public DcMotorEx rightBack;
      public DcMotorEx leftArm;
      public DcMotorEx rightArm;
-     public Servo claw1;
+     public DcMotorSimple claw1;
      public Servo claw2;
     public DcMotorEx pivot1;
 
@@ -86,7 +86,7 @@ public class wirHardware {
         leftBack  = hwMap.get(DcMotorEx.class, "leftBack");
         rightBack = hwMap.get(DcMotorEx.class, "rightBack");
         rightArm   = hwMap.get(DcMotorEx.class, "rightArm");
-        claw1 = hwMap.get(Servo.class, "claw1");
+        claw1 = hwMap.get(DcMotorSimple.class, "claw1");
         claw2 = hwMap.get(Servo.class, "claw2");
         pivot1 = hwMap.get(DcMotorEx.class, "pivot1");
 
@@ -100,10 +100,9 @@ public class wirHardware {
         leftArm.setDirection(DcMotorEx.Direction.FORWARD);
         rightArm.setDirection(DcMotorEx.Direction.FORWARD);
 
-        claw1.setDirection(Servo.Direction.FORWARD);
-        claw2.setDirection(Servo.Direction.FORWARD);
+        claw1.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        pivot1.setDirection(DcMotorSimple.Direction.FORWARD);
+        pivot1.setDirection(DcMotorEx.Direction.FORWARD);
 
         leftFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -111,7 +110,7 @@ public class wirHardware {
         rightBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         leftArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         rightArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        pivot1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        pivot1.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         leftFront.setPower(0);
         leftBack.setPower(0);
         rightFront.setPower(0);
@@ -119,10 +118,12 @@ public class wirHardware {
         leftArm.setPower(0);
         rightArm.setPower(0);
 
-        claw1.setPosition(0);
+        claw1.setPower(0);
         claw2.setPosition(0);
 
         pivot1.setPower(0);
+
+        pivot1.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         // leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
