@@ -51,7 +51,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with *exactly the same name*.
  *
  * Or... In OnBot Java, add a new file named RobotHardware.java, select this sample, and select Not an OpMode.
- * Also add a new OpMode, select the sample ConceptExternalHardwareClass.java, and select TeleOp.
+ * Also add a new OpMode, select the sample ConceptExternalHardwareClass.java, and select TeLeOp.
  *
  */
 
@@ -98,7 +98,7 @@ public class wirHardware {
         rightBack.setDirection(DcMotorEx.Direction.FORWARD);
         leftBack.setDirection(DcMotorEx.Direction.FORWARD);
         leftArm.setDirection(DcMotorEx.Direction.FORWARD);
-        rightArm.setDirection(DcMotorEx.Direction.FORWARD);
+        rightArm.setDirection(DcMotorEx.Direction.REVERSE);
 
         claw1.setDirection(DcMotorSimple.Direction.FORWARD);
 

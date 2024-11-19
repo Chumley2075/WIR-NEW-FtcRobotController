@@ -47,7 +47,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *
  *   The desired path in this example is:
  *   - Drive forward for 48 inches
- *   - Spin right for 12 Inches
+ *   - Spin right for 12 Inches:clap:
  *   - Drive Backward for 24 inches
  *   - Stop and close the claw.
  *

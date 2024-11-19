@@ -94,10 +94,10 @@ public class wirTeleop extends LinearOpMode {
             }
 
 
-            if (gamepad2.dpad_up){
+            if (gamepad2.y){
                 robot.rightArm.setPower(.5);
                 robot.leftArm.setPower(.5);
-            }else if (gamepad2.dpad_down){
+            }else if (gamepad2.a){
                 robot.rightArm.setPower(-.5);
                 robot.leftArm.setPower(-.5);
             }else {
@@ -105,9 +105,9 @@ public class wirTeleop extends LinearOpMode {
                 robot.rightArm.setPower(0);
             }
 
-            if (gamepad2.y){
+            if (gamepad2.x){
                 robot.claw1.setPower(.5);
-            }else if (gamepad2.a){
+            }else if (gamepad2.b){
                 robot.claw1.setPower(-.5);
             }else {
                 robot.claw1.setPower(0);
