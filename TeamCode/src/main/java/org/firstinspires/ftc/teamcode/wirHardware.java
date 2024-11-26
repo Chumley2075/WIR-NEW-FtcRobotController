@@ -68,6 +68,7 @@ public class wirHardware {
      public DcMotorSimple claw1;
      public Servo claw2;
     public DcMotorEx pivot1;
+    public Servo elbow;
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
     HardwareMap hwMap           =  null;
@@ -89,6 +90,7 @@ public class wirHardware {
         claw1 = hwMap.get(DcMotorSimple.class, "claw1");
         claw2 = hwMap.get(Servo.class, "claw2");
         pivot1 = hwMap.get(DcMotorEx.class, "pivot1");
+        elbow = hwMap.get(Servo.class, "elbow");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -120,6 +122,7 @@ public class wirHardware {
 
         claw1.setPower(0);
         claw2.setPosition(0);
+        elbow.setPosition(0);
 
         pivot1.setPower(0);
 

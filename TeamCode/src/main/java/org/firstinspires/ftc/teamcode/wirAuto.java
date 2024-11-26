@@ -87,11 +87,10 @@ public class wirAuto extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         encoderDrive(0.5, 96);
-        sleep(5000);
+        sleep(500);
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
-
     /*
      *  Method to perform a relative move, based on encoder counts.
      *  Encoders are not reset as the move is based on the current position.
