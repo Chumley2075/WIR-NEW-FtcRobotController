@@ -68,10 +68,8 @@ public class wirTeleop extends LinearOpMode {
         telemetry.addData(">", "Robot Ready.  Press START.");    //
         telemetry.update();
         robot.init(hardwareMap);
-        robot.pivot1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         // Wait for the game to start (driver presses START)
         waitForStart();
-        robot.pivot1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
@@ -106,35 +104,15 @@ public class wirTeleop extends LinearOpMode {
             }
 
             if (gamepad2.x){
-                robot.claw1.setPower(.5);
-            }else if (gamepad2.b){
-                robot.claw1.setPower(-.5);
-            }else {;
-                robot.claw1.setPower(0);
-            }
-
-            if (gamepad2.right_bumper) {
-                robot.elbow.setPower(-1);
-            }else if (gamepad2.left_bumper){
-                robot.elbow.setPower(.5);
-            }else {
-                robot.elbow.setPower(0);
-            }
-
-            if (gamepad2.x){
                 robot.claw2.setPosition(1);
             }else if (gamepad2.b){
                 robot.claw2.setPosition(0);
             }
 
             if (gamepad2.dpad_right){
-                robot.pivot1.setPower(1);
-                robot.pivot1.setTargetPosition(40);
-                robot.pivot1.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                robot.elbow.setDirection(Servo.Direction.FORWARD);
             }else if (gamepad2.dpad_left){
-                robot.pivot1.setPower(1);
-                robot.pivot1.setTargetPosition(0);
-                robot.pivot1.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+                robot.elbow.setDirection(Servo.Direction.REVERSE);
             }
 
 
@@ -144,10 +122,7 @@ public class wirTeleop extends LinearOpMode {
             robot.rightFront.setPower(right);
             robot.leftBack.setPower(left);
             robot.rightBack.setPower(right);
-            // Send telemetry message to signify robot running
-            telemetry.addData("ticks", robot.pivot1.getTargetPosition());
-            telemetry.addData("current",robot.pivot1.getCurrentPosition());
-            telemetry.update();
+            // Send telemetry message to signify robot running,
 
         }
     }
