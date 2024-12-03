@@ -110,9 +110,9 @@ public class wirTeleop extends LinearOpMode {
             }
 
             if (gamepad2.dpad_right){
-                robot.elbow.setDirection(Servo.Direction.FORWARD);
+                robot.elbow.setDirection(DcMotorSimple.Direction.REVERSE);
             }else if (gamepad2.dpad_left){
-                robot.elbow.setDirection(Servo.Direction.REVERSE);
+                robot.elbow.setDirection(DcMotorSimple.Direction.FORWARD);
             }
 
 

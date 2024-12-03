@@ -66,7 +66,7 @@ public class wirHardware {
      public DcMotorEx leftArm;
      public DcMotorEx rightArm;
      public Servo claw2;
-    public Servo elbow;
+    public DcMotorSimple elbow;
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
     HardwareMap hwMap           =  null;
@@ -86,7 +86,7 @@ public class wirHardware {
         rightBack = hwMap.get(DcMotorEx.class, "rightBack");
         rightArm   = hwMap.get(DcMotorEx.class, "rightArm");
         claw2 = hwMap.get(Servo.class, "claw2");
-        elbow = hwMap.get(Servo.class, "pivot1");
+        elbow = hwMap.get(DcMotorSimple.class, "elbow");
 
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -100,7 +100,7 @@ public class wirHardware {
         rightArm.setDirection(DcMotorEx.Direction.REVERSE);
 
 
-        elbow.setDirection(Servo.Direction.REVERSE);
+        elbow.setDirection(DcMotorSimple.Direction.REVERSE);
 
         leftFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -108,8 +108,8 @@ public class wirHardware {
         rightBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         leftArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         rightArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        elbow.setDirection(Servo.Direction.FORWARD);
-        elbow.setDirection(Servo.Direction.REVERSE);
+        elbow.setDirection(DcMotorSimple.Direction.FORWARD);
+        elbow.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setPower(0);
         leftBack.setPower(0);
         rightFront.setPower(0);
@@ -118,7 +118,7 @@ public class wirHardware {
         rightArm.setPower(0);
 
         claw2.setPosition(0);
-        elbow.setPosition(0);
+        elbow.setPower(0);
 
         
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
