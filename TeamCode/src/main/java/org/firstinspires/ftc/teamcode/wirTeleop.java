@@ -114,15 +114,15 @@ public class wirTeleop extends LinearOpMode {
             }
 
             if (gamepad2.right_bumper) {
-                robot.elbow.setPosition(.5);
+                robot.elbow.setPower(-1);
             }else if (gamepad2.left_bumper){
-                robot.elbow.setPosition(-.5);
+                robot.elbow.setPower(.5);
             }else {
-                robot.elbow.setPosition(0);
+                robot.elbow.setPower(0);
             }
 
             if (gamepad2.x){
-                robot.claw2.setPosition(.5);
+                robot.claw2.setPosition(1);
             }else if (gamepad2.b){
                 robot.claw2.setPosition(0);
             }
