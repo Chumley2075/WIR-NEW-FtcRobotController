@@ -37,6 +37,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 /*
@@ -55,6 +56,8 @@ import com.qualcomm.robotcore.util.Range;
 //@Disabled
 public class wirTeleop extends LinearOpMode {
     wirHardware robot = new wirHardware();
+    ElapsedTime timer = new ElapsedTime();
+    int tickPostion = 0;
 
     @Override
     public void runOpMode() {
@@ -68,8 +71,17 @@ public class wirTeleop extends LinearOpMode {
         telemetry.addData(">", "Robot Ready.  Press START.");    //
         telemetry.update();
         robot.init(hardwareMap);
+        robot.leftArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        robot.rightArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        robot.leftArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        robot.rightArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        robot.leftFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        robot.leftBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        robot.rightBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        robot.rightFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         // Wait for the game to start (driver presses START)
         waitForStart();
+        timer.reset();
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
@@ -92,27 +104,31 @@ public class wirTeleop extends LinearOpMode {
             }
 
 
-            if (gamepad2.a){
-                robot.rightArm.setPower(.5);
-                robot.leftArm.setPower(.5);
-            }else if (gamepad2.y){
-                robot.rightArm.setPower(-.5);
-                robot.leftArm.setPower(-.5);
-            }else {
-                robot.leftArm.setPower(0);
-                robot.rightArm.setPower(0);
+            if (gamepad2.dpad_up){
+                if (timer.milliseconds() >= 100){
+                    tickPostion+=5;
+                    timer.reset();
+                }
+            }else if (gamepad2.dpad_down){
+                if (timer.milliseconds() >= 100){
+                    tickPostion-=5;
+                    timer.reset();
+                }
             }
+            armHold(1,tickPostion);
 
-            if (gamepad2.x){
+            if (gamepad2.right_trigger > 0){
                 robot.claw2.setPosition(1);
-            }else if (gamepad2.b){
+            }else if (gamepad2.left_trigger > 0){
                 robot.claw2.setPosition(0);
             }
 
             if (gamepad2.dpad_right){
-                robot.elbow.setDirection(DcMotorSimple.Direction.REVERSE);
+                robot.elbow.setPower(1);
             }else if (gamepad2.dpad_left){
-                robot.elbow.setDirection(DcMotorSimple.Direction.FORWARD);
+                robot.elbow.setPower(-1);
+            } else {
+                robot.elbow.setPower(0);
             }
 
 
@@ -125,6 +141,23 @@ public class wirTeleop extends LinearOpMode {
             // Send telemetry message to signify robot running,
 
         }
+    }
+    public void armHold(double speed, int tickTarget) {
+        robot.rightBack.setTargetPosition(-tickTarget);
+        robot.leftBack.setTargetPosition(tickTarget);
+        robot.rightFront.setTargetPosition(-tickTarget);
+        robot.leftFront.setTargetPosition(tickTarget);
+
+        robot.rightBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.leftBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.rightFront.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.leftFront.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+        robot.rightBack.setPower(speed);
+        robot.leftBack.setPower(speed);
+        robot.rightFront.setPower(speed);
+        robot.leftFront.setPower(speed);
+
     }
 }
 

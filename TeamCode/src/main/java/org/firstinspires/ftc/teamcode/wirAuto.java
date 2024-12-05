@@ -100,9 +100,9 @@ public class wirAuto extends LinearOpMode {
      *  3) Driver stops the OpMode running.
      */
     public void encoderDrive(double speed, int tickTarget) {
-        robot.rightBack.setTargetPosition(tickTarget);
+        robot.rightBack.setTargetPosition(-tickTarget);
         robot.leftBack.setTargetPosition(tickTarget);
-        robot.rightFront.setTargetPosition(tickTarget);
+        robot.rightFront.setTargetPosition(-tickTarget);
         robot.leftFront.setTargetPosition(tickTarget);
 
         robot.rightBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
@@ -120,15 +120,11 @@ public class wirAuto extends LinearOpMode {
             telemetry.addData("left B: ",robot.leftBack.getCurrentPosition());
             telemetry.update();
         }
-            robot.leftBack.setPower(0);
+        robot.leftBack.setPower(0);
         robot.rightFront.setPower(0);
         robot.leftFront.setPower(0);
         robot.rightBack.setPower(0);
 
-        robot.rightBack.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        robot.leftBack.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        robot.rightFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        robot.leftFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
         robot.rightBack.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftBack.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);

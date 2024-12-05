@@ -100,7 +100,6 @@ public class wirHardware {
         rightArm.setDirection(DcMotorEx.Direction.REVERSE);
 
 
-        elbow.setDirection(DcMotorSimple.Direction.REVERSE);
 
         leftFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -109,7 +108,6 @@ public class wirHardware {
         leftArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         rightArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         elbow.setDirection(DcMotorSimple.Direction.FORWARD);
-        elbow.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setPower(0);
         leftBack.setPower(0);
         rightFront.setPower(0);
@@ -122,8 +120,8 @@ public class wirHardware {
 
         
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
-        // leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        // rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+         leftArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+         rightArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 /*
         // Define and initialize ALL installed servos.
         leftHand = myOpMode.hardwareMap.get(Servo.class, "left_hand");
