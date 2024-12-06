@@ -93,9 +93,9 @@ public class wirTeleop extends LinearOpMode {
             telemetry.addData("currentLeft", robot.leftArm.getCurrentPosition());
             telemetry.update();
             // Run wheels in POV mode (note: The joystick goes negative when pushed forward, so
-            negate it)
+            //negate it;
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left
-            and right.
+            //right.
             // This way it's also easy to just drive straight, or just turn.
             drive = -gamepad1.left_stick_y;
             turn = gamepad1.right_stick_x;
