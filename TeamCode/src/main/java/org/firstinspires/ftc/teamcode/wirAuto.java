@@ -86,8 +86,9 @@ public class wirAuto extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
+        //3333 ticks = 6ft.
         encoderDrive(0.5, 96);
-        sleep(500);
+        sleep(2000);
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
@@ -100,10 +101,10 @@ public class wirAuto extends LinearOpMode {
      *  3) Driver stops the OpMode running.
      */
     public void encoderDrive(double speed, int tickTarget) {
-        robot.rightBack.setTargetPosition(-tickTarget);
-        robot.leftBack.setTargetPosition(tickTarget);
-        robot.rightFront.setTargetPosition(-tickTarget);
-        robot.leftFront.setTargetPosition(tickTarget);
+        robot.rightBack.setTargetPosition(tickTarget);
+        robot.leftBack.setTargetPosition(-tickTarget);
+        robot.rightFront.setTargetPosition(tickTarget);
+        robot.leftFront.setTargetPosition(-tickTarget);
 
         robot.rightBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         robot.leftBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);

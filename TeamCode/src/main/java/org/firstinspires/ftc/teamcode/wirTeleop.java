@@ -120,9 +120,9 @@ public class wirTeleop extends LinearOpMode {
                     timer.reset();
                 }
             }else if(gamepad2.y){
-                tickPostion = -2100;
+                tickPostion = -1800;
             }else if(gamepad2.a){
-                tickPostion = 0;
+                tickPostion = -50;
             }
             armHold(1,tickPostion);
             if (gamepad2.right_trigger > 0){
