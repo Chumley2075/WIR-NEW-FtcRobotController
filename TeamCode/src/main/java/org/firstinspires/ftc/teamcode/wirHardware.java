@@ -120,8 +120,8 @@ public class wirHardware {
 
         
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
-         leftArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-         rightArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        // leftArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+         //rightArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 /*
         // Define and initialize ALL installed servos.
         leftHand = myOpMode.hardwareMap.get(Servo.class, "left_hand");
