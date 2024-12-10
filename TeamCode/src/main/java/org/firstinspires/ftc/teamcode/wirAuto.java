@@ -102,9 +102,9 @@ public class wirAuto extends LinearOpMode {
      */
     public void encoderDrive(double speed, int tickTarget) {
         robot.rightBack.setTargetPosition(tickTarget);
-        robot.leftBack.setTargetPosition(-tickTarget);
+        robot.leftBack.setTargetPosition(tickTarget);
         robot.rightFront.setTargetPosition(tickTarget);
-        robot.leftFront.setTargetPosition(-tickTarget);
+        robot.leftFront.setTargetPosition(tickTarget);
 
         robot.rightBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         robot.leftBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
