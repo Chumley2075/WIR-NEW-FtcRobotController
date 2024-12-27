@@ -57,7 +57,7 @@ import com.qualcomm.robotcore.util.Range;
 public class wirTeleop extends LinearOpMode {
     wirHardware robot = new wirHardware();
     //ElapsedTime timer = new ElapsedTime();
-    // int tickPostion = 0;
+     int tickPostion = 500;
 
     @Override
     public void runOpMode() {
@@ -81,68 +81,84 @@ public class wirTeleop extends LinearOpMode {
         robot.rightFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         // Wait for the game to start (driver presses START)
         waitForStart();
+        robot.leftArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        robot.rightArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        robot.leftArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        robot.rightArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         //  timer.reset();
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             //   telemetry.addData("TickPosition",  tickPostion);
-            // telemetry.addData("currentRight",  robot.rightArm.getCurrentPosition());
-            //telemetry.addData("currentLeft",  robot.leftArm.getCurrentPosition());
+             telemetry.addData("currentRight",  robot.rightArm.getCurrentPosition());
+            telemetry.addData("currentLeft",  robot.leftArm.getCurrentPosition());
             telemetry.update();
             // Run wheels in POV mode (note: The joystick goes negative when pushed forward, so negate it)
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
             // This way it's also easy to just drive straight, or just turn.
             drive = -gamepad1.left_stick_y;
-            turn  =  gamepad1.right_stick_x;
+            turn = gamepad1.right_stick_x;
 
             // Combine drive and turn for blended motion.
-            left  = drive + turn;
+            left = drive + turn;
             right = drive - turn;
 
             // Normalize the values so neither exceed +/- 1.0
             max = Math.max(Math.abs(left), Math.abs(right));
-            if (max > 1.0)
-            {
+            if (max > 1.0) {
                 left /= max;
                 right /= max;
             }
-            if(gamepad2.dpad_up){
+            if (gamepad1.right_trigger > 0) {
+                robot.leftFront.setPower(gamepad1.right_trigger);
+                robot.rightFront.setPower(gamepad1.right_trigger);
+                robot.leftBack.setPower(-gamepad1.right_trigger);
+                robot.rightBack.setPower(-gamepad1.right_trigger);
+            } else if (gamepad1.left_trigger > 0) {
+                robot.leftFront.setPower(-gamepad1.left_trigger);
+                robot.rightFront.setPower(-gamepad1.left_trigger);
+                robot.leftBack.setPower(gamepad1.left_trigger);
+                robot.rightBack.setPower(gamepad1.left_trigger);
+            } else {
+                robot.leftFront.setPower(left);
+                robot.rightFront.setPower(right);
+                robot.leftBack.setPower(left);
+                robot.rightBack.setPower(right);
+            }
+/*
+            if (gamepad2.dpad_up) {
                 robot.rightArm.setPower(1);
                 robot.leftArm.setPower(1);
-            }else if(gamepad2.dpad_down){
+            } else if (gamepad2.dpad_down) {
                 robot.rightArm.setPower(-1);
                 robot.leftArm.setPower(-1);
-            }else{
+            } else {
                 robot.rightArm.setPower(0);
                 robot.leftArm.setPower(0);
             }
-
-/*
-            if (gamepad2.dpad_up){
-                if (timer.milliseconds() >= 100){
-                    tickPostion-=100;
-                    timer.reset();
-                }
-            }else if (gamepad2.dpad_down){
-                if (timer.milliseconds() >= 100){
-                    tickPostion+=100;
-                    timer.reset();
-                }
-            }else if(gamepad2.y){
-                tickPostion = -2100;
-            }else if(gamepad2.a){
-                tickPostion = 0;
-            }
-            armHold(1,tickPostion);
 */
-            if (gamepad2.right_trigger > 0){
+            robot.rightArm.setTargetPosition(tickPostion);
+            robot.leftArm.setTargetPosition(tickPostion);
+            robot.leftArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            robot.rightArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            robot.leftArm.setPower(1);
+            robot.rightArm.setPower(1);
+            if (gamepad2.dpad_up) {
+                tickPostion = 500;
+            }else if(gamepad2.dpad_down){
+                tickPostion = 0;
+
+            }else if (gamepad2.dpad_left){
+                tickPostion += 20;
+            }
+            if (gamepad2.right_trigger > 0) {
                 robot.claw2.setPosition(1);
-            }else if (gamepad2.left_trigger > 0){
+            } else if (gamepad2.left_trigger > 0) {
                 robot.claw2.setPosition(0);
             }
 
-            if (gamepad2.x){
+            if (gamepad2.x) {
                 robot.elbow.setPower(1);
-            }else if (gamepad2.b){
+            } else if (gamepad2.b) {
                 robot.elbow.setPower(-1);
             } else {
                 robot.elbow.setPower(0);
@@ -150,31 +166,12 @@ public class wirTeleop extends LinearOpMode {
 
 
 
-            // Output the safe vales to the motor drives.
-            robot.leftFront.setPower(left);
-            robot.rightFront.setPower(right);
-            robot.leftBack.setPower(left);
-            robot.rightBack.setPower(right);
-            // Send telemetry mesasage to signify robot running,
+
 
         }
     }
-    public void armHold(double speed, int tickTarget) {
-        robot.leftArm.setTargetPositionTolerance(10);
-        robot.rightArm.setTargetPositionTolerance(10);
+ }
 
-        robot.leftArm.setTargetPosition(-tickTarget);
-        robot.rightArm.setTargetPosition(-tickTarget);
-
-
-        robot.leftArm.setPower(speed);
-        robot.rightArm.setPower(speed);
-        robot.leftArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        robot.rightArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-
-
-    }
-}
 
 //left in 1
 //right in 0

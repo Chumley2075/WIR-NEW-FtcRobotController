@@ -68,6 +68,7 @@ public class wirHardware {
      public Servo claw2;
     public DcMotorSimple elbow;
 
+
     // Define a constructor that allows the OpMode to pass a reference to itself.
     HardwareMap hwMap           =  null;
     /**
@@ -115,7 +116,7 @@ public class wirHardware {
         leftArm.setPower(0);
         rightArm.setPower(0);
 
-        claw2.setPosition(0);
+        claw2.setPosition(1);
         elbow.setPower(0);
 
         

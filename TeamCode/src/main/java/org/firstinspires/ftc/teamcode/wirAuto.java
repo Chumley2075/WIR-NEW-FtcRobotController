@@ -86,7 +86,7 @@ public class wirAuto extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        //3333 ticks = 6ft.
+        //3333.6 ticks = 6ft.
         encoderDrive(0.5, 96);
         sleep(2000);
         telemetry.addData("Path", "Complete");
