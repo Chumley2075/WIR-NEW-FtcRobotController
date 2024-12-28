@@ -92,9 +92,10 @@ public class wirAuto extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         //3333.6 ticks = 6ft.
         //42 ticks per inch
-        encoderDrive(0.5, -12);
-        sleep(10000);
-        encoderStrafeleft(.5, 12);
+        encoderDrive(0.5, -24);
+        sleep(1000);
+        encoderStrafeleft(.5, 24);
+
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
@@ -142,9 +143,9 @@ public class wirAuto extends LinearOpMode {
     public void encoderStrafeleft(double speed, double inchTarget) {
         inchTarget *= 41.6;
         robot.rightBack.setTargetPosition((int) inchTarget);
-        robot.leftBack.setTargetPosition((int) -inchTarget);
+        robot.leftBack.setTargetPosition((int) inchTarget);
         robot.rightFront.setTargetPosition((int) -inchTarget);
-        robot.leftFront.setTargetPosition((int) inchTarget);
+        robot.leftFront.setTargetPosition((int) -inchTarget);
 
         robot.rightBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         robot.leftBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
@@ -175,9 +176,9 @@ public class wirAuto extends LinearOpMode {
     public void encoderStraferight(double speed, double inchTarget) {
         inchTarget *= 41.6;
         robot.rightBack.setTargetPosition((int) -inchTarget);
-        robot.leftBack.setTargetPosition((int) inchTarget);
+        robot.leftBack.setTargetPosition((int) -inchTarget);
         robot.rightFront.setTargetPosition((int) inchTarget);
-        robot.leftFront.setTargetPosition((int) -inchTarget);
+        robot.leftFront.setTargetPosition((int) inchTarget);
 
         robot.rightBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         robot.leftBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);

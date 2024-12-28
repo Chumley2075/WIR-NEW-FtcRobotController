@@ -57,7 +57,7 @@ import com.qualcomm.robotcore.util.Range;
 public class wirTeleop extends LinearOpMode {
     wirHardware robot = new wirHardware();
     ElapsedTime timer = new ElapsedTime();
-     int tickPostion = 500;
+     int tickPostion = 0;
 
     @Override
     public void runOpMode() {
@@ -97,8 +97,8 @@ public class wirTeleop extends LinearOpMode {
             // Run wheels in POV mode (note: The joystick goes negative when pushed forward, so negate it)
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
             // This way it's also easy to just drive straight, or just turn.
-            drive = -gamepad1.left_stick_y;
-            turn = gamepad1.right_stick_x;
+            drive = gamepad1.left_stick_y;
+            turn = -gamepad1.right_stick_x;
 
             // Combine drive and turn for blended motion.
             left = drive + turn;
@@ -144,19 +144,24 @@ public class wirTeleop extends LinearOpMode {
             robot.rightArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             robot.leftArm.setPower(1);
             robot.rightArm.setPower(1);
+            robot.leftArm.setTargetPositionTolerance(10);
+            robot.rightArm.setTargetPositionTolerance(10);
+            //2900 high basket
+            //1060 high specimen
+
             if (gamepad2.dpad_up) {
-                tickPostion = 500;
+                tickPostion = 2900;
             }else if(gamepad2.dpad_down){
                 tickPostion = 0;
 
             }else if (gamepad2.dpad_left) {
-                if (timer.milliseconds() > 200){
+                if (timer.milliseconds() > 50){
                     tickPostion -= 20;
                     timer.reset();
                 }
 
             }else if (gamepad2.dpad_right) {
-                if (timer.milliseconds() > 200) {
+                if (timer.milliseconds() > 50) {
                     tickPostion += 20;
                     timer.reset();
                 }
