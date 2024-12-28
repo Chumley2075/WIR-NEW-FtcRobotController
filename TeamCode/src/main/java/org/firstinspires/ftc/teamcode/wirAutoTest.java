@@ -30,9 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -62,10 +60,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="wirAuto", group="Robot")
+@Autonomous(name="wirAutoTEst", group="Robot")
 //@Disabled
 
-public class wirAuto extends LinearOpMode {
+public class wirAutoTest extends LinearOpMode {
 
     /* Declare OpMode members. */
 
@@ -92,9 +90,14 @@ public class wirAuto extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         //3333.6 ticks = 6ft.
         //42 ticks per inch
-        encoderDrive(0.5, -12);
-        sleep(10000);
-        encoderStrafeleft(.5, 12);
+        encoderDrive(0.5, -1000);
+        telemetry.addData("right F: ",robot.rightFront.getCurrentPosition());
+        telemetry.addData("left B: ",robot.leftBack.getCurrentPosition());
+        telemetry.addData("right B: ",robot.rightBack.getCurrentPosition());
+        telemetry.addData("left F: ",robot.leftFront.getCurrentPosition());
+        telemetry.update();
+        sleep(20000);
+
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
@@ -107,75 +110,9 @@ public class wirAuto extends LinearOpMode {
      *  3) Driver stops the OpMode running.
      */
     public void encoderDrive(double speed, double inchTarget) {
-        inchTarget *= 46.3;
-        robot.rightBack.setTargetPosition((int) -inchTarget);
-        robot.leftBack.setTargetPosition((int) -inchTarget);
-        robot.rightFront.setTargetPosition((int) -inchTarget);
-        robot.leftFront.setTargetPosition((int) -inchTarget);
 
-        robot.rightBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        robot.leftBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        robot.rightFront.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        robot.leftFront.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-
-        robot.rightBack.setPower(speed);
-        robot.leftBack.setPower(speed);
-        robot.rightFront.setPower(speed);
-        robot.leftFront.setPower(speed);
-
-        while (robot.rightFront.isBusy()|| robot.leftBack.isBusy()){
-            telemetry.addData("right F: ",robot.rightFront.getCurrentPosition());
-            telemetry.addData("left B: ",robot.leftBack.getCurrentPosition());
-            telemetry.update();
-        }
-        robot.leftBack.setPower(0);
-        robot.rightFront.setPower(0);
-        robot.leftFront.setPower(0);
-        robot.rightBack.setPower(0);
-
-
-        robot.rightBack.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        robot.leftBack.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        robot.rightFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        robot.leftFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-    }
-    public void encoderStrafeleft(double speed, double inchTarget) {
-        inchTarget *= 41.6;
         robot.rightBack.setTargetPosition((int) inchTarget);
         robot.leftBack.setTargetPosition((int) -inchTarget);
-        robot.rightFront.setTargetPosition((int) -inchTarget);
-        robot.leftFront.setTargetPosition((int) inchTarget);
-
-        robot.rightBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        robot.leftBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        robot.rightFront.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        robot.leftFront.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-
-        robot.rightBack.setPower(speed);
-        robot.leftBack.setPower(speed);
-        robot.rightFront.setPower(speed);
-        robot.leftFront.setPower(speed);
-
-        while (robot.rightFront.isBusy()|| robot.leftBack.isBusy()){
-            telemetry.addData("right F: ",robot.rightFront.getCurrentPosition());
-            telemetry.addData("left B: ",robot.leftBack.getCurrentPosition());
-            telemetry.update();
-        }
-        robot.leftBack.setPower(0);
-        robot.rightFront.setPower(0);
-        robot.leftFront.setPower(0);
-        robot.rightBack.setPower(0);
-
-
-        robot.rightBack.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        robot.leftBack.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        robot.rightFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        robot.leftFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-    }
-    public void encoderStraferight(double speed, double inchTarget) {
-        inchTarget *= 41.6;
-        robot.rightBack.setTargetPosition((int) -inchTarget);
-        robot.leftBack.setTargetPosition((int) inchTarget);
         robot.rightFront.setTargetPosition((int) inchTarget);
         robot.leftFront.setTargetPosition((int) -inchTarget);
 
@@ -205,6 +142,8 @@ public class wirAuto extends LinearOpMode {
         robot.rightFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
+
+
 }
 
 

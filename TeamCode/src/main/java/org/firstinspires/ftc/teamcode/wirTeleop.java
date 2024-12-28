@@ -56,7 +56,7 @@ import com.qualcomm.robotcore.util.Range;
 //@Disabled
 public class wirTeleop extends LinearOpMode {
     wirHardware robot = new wirHardware();
-    //ElapsedTime timer = new ElapsedTime();
+    ElapsedTime timer = new ElapsedTime();
      int tickPostion = 500;
 
     @Override
@@ -81,6 +81,7 @@ public class wirTeleop extends LinearOpMode {
         robot.rightFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         // Wait for the game to start (driver presses START)
         waitForStart();
+        timer.reset();
         robot.leftArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         robot.rightArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         robot.leftArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
@@ -89,8 +90,9 @@ public class wirTeleop extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             //   telemetry.addData("TickPosition",  tickPostion);
-             telemetry.addData("currentRight",  robot.rightArm.getCurrentPosition());
-            telemetry.addData("currentLeft",  robot.leftArm.getCurrentPosition());
+             telemetry.addData("currentRight: ",  robot.rightArm.getCurrentPosition());
+            telemetry.addData("currentLeft: ",  robot.leftArm.getCurrentPosition());
+            telemetry.addData("tickposition: ", tickPostion);
             telemetry.update();
             // Run wheels in POV mode (note: The joystick goes negative when pushed forward, so negate it)
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
@@ -147,8 +149,17 @@ public class wirTeleop extends LinearOpMode {
             }else if(gamepad2.dpad_down){
                 tickPostion = 0;
 
-            }else if (gamepad2.dpad_left){
-                tickPostion += 20;
+            }else if (gamepad2.dpad_left) {
+                if (timer.milliseconds() > 200){
+                    tickPostion -= 20;
+                    timer.reset();
+                }
+
+            }else if (gamepad2.dpad_right) {
+                if (timer.milliseconds() > 200) {
+                    tickPostion += 20;
+                    timer.reset();
+                }
             }
             if (gamepad2.right_trigger > 0) {
                 robot.claw2.setPosition(1);
