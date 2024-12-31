@@ -78,6 +78,7 @@ public class wirTeleop extends LinearOpMode {
         robot.leftFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         robot.leftBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         robot.rightBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        robot.elbow.s
         robot.rightFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         // Wait for the game to start (driver presses START)
         waitForStart();
@@ -98,7 +99,7 @@ public class wirTeleop extends LinearOpMode {
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
             // This way it's also easy to just drive straight, or just turn.
             drive = gamepad1.left_stick_y;
-            turn = -gamepad1.right_stick_x;
+            turn = Math.cbrt(-gamepad1.right_stick_x);
 
             // Combine drive and turn for blended motion.
             left = drive + turn;
@@ -140,29 +141,32 @@ public class wirTeleop extends LinearOpMode {
 */
             robot.rightArm.setTargetPosition(tickPostion);
             robot.leftArm.setTargetPosition(tickPostion);
+            robot.leftArm.setTargetPositionTolerance(10);
+            robot.rightArm.setTargetPositionTolerance(10);
             robot.leftArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             robot.rightArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             robot.leftArm.setPower(1);
             robot.rightArm.setPower(1);
-            robot.leftArm.setTargetPositionTolerance(10);
-            robot.rightArm.setTargetPositionTolerance(10);
+
             //2900 high basket
             //1060 high specimen
 
-            if (gamepad2.dpad_up) {
+            if (gamepad2.y) {
                 tickPostion = 2900;
-            }else if(gamepad2.dpad_down){
-                tickPostion = 0;
-
-            }else if (gamepad2.dpad_left) {
-                if (timer.milliseconds() > 50){
-                    tickPostion -= 20;
+            }else if(gamepad2.a){
+                tickPostion = 20;
+            }else if (gamepad2.x) {
+                tickPostion = 1060;
+            }else if (gamepad2.b){
+                tickPostion =1000;
+            }else if (gamepad2.left_bumper && tickPostion >= 50) {
+                if (timer.milliseconds() > 50) {
+                    tickPostion -= 50;
                     timer.reset();
                 }
-
-            }else if (gamepad2.dpad_right) {
+            }else if (gamepad2.right_bumper && tickPostion <= 3000) {
                 if (timer.milliseconds() > 50) {
-                    tickPostion += 20;
+                    tickPostion += 50;
                     timer.reset();
                 }
             }
@@ -172,9 +176,9 @@ public class wirTeleop extends LinearOpMode {
                 robot.claw2.setPosition(0);
             }
 
-            if (gamepad2.x) {
+            if (gamepad2.dpad_right) {
                 robot.elbow.setPower(1);
-            } else if (gamepad2.b) {
+            } else if (gamepad2.dpad_left) {
                 robot.elbow.setPower(-1);
             } else {
                 robot.elbow.setPower(0);
