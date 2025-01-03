@@ -78,7 +78,6 @@ public class wirTeleop extends LinearOpMode {
         robot.leftFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         robot.leftBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         robot.rightBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        robot.elbow.s
         robot.rightFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         // Wait for the game to start (driver presses START)
         waitForStart();
@@ -156,7 +155,7 @@ public class wirTeleop extends LinearOpMode {
             }else if(gamepad2.a){
                 tickPostion = 20;
             }else if (gamepad2.x) {
-                tickPostion = 1060;
+                tickPostion = 1400;
             }else if (gamepad2.b){
                 tickPostion =1000;
             }else if (gamepad2.left_bumper && tickPostion >= 50) {
