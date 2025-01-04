@@ -60,10 +60,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="wirAutoLeftRedSpec", group="Robot")
+@Autonomous(name="wirAutoRightBlueSpec", group="Robot")
 //@Disabled
 
-public class wirAutoLeftRedSpec extends LinearOpMode {
+public class wirAutoRightBlueSpec extends LinearOpMode {
 
     /* Declare OpMode members. */
 
@@ -105,23 +105,17 @@ public class wirAutoLeftRedSpec extends LinearOpMode {
         //42 ticks per inch
         encoderDrive(0.5, -12);
         sleep(sleepTime);
-        encoderStrafeleft(.5, 24);
+        encoderStraferight(.5, 12);
         sleep(sleepTime);
         encoderTurn180();
         sleep(sleepTime);
-        encoderDrive(0.5,12 );
+        encoderDrive(0.5,8);
         sleep(sleepTime);
         Score();
         sleep(sleepTime);
-        encoderDrive(0.5, -12);
+        encoderDrive(0.5, -16);
         sleep(sleepTime);
-        encoderStrafeleft(0.5, 36);
-        sleep(sleepTime);
-        encoderDrive(0.5, 42);
-        sleep(sleepTime);
-        encoderTurn90();
-        sleep(sleepTime);
-        encoderDrive(0.5, 12);
+        encoderStraferight(0.5, 54);
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
@@ -238,7 +232,7 @@ public class wirAutoLeftRedSpec extends LinearOpMode {
         robot.leftFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
     public void encoderTurn180() {
-        int inchTarget = 2200;
+        int inchTarget = 2250;
         robot.rightBack.setTargetPosition((int) -inchTarget);
         robot.leftBack.setTargetPosition((int) inchTarget);
         robot.rightFront.setTargetPosition((int) -inchTarget);

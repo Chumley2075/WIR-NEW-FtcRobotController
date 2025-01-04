@@ -60,10 +60,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="wirAutoLeftRedSpec", group="Robot")
+@Autonomous(name="wirAutoRedLeftHigh", group="Robot")
 //@Disabled
 
-public class wirAutoLeftRedSpec extends LinearOpMode {
+public class wirAutoRedLeftHigh extends LinearOpMode {
 
     /* Declare OpMode members. */
 
@@ -105,23 +105,25 @@ public class wirAutoLeftRedSpec extends LinearOpMode {
         //42 ticks per inch
         encoderDrive(0.5, -12);
         sleep(sleepTime);
-        encoderStrafeleft(.5, 24);
+        encoderTurn45();
         sleep(sleepTime);
-        encoderTurn180();
+        encoderStraferight(0.5, 12);
         sleep(sleepTime);
-        encoderDrive(0.5,12 );
+        Raiseelevator();
+        sleep(2000);
+        encoderDrive(0.5, 6);
         sleep(sleepTime);
-        Score();
+        Elevatordown();
         sleep(sleepTime);
-        encoderDrive(0.5, -12);
+        encoderTurn135();
         sleep(sleepTime);
-        encoderStrafeleft(0.5, 36);
-        sleep(sleepTime);
-        encoderDrive(0.5, 42);
+        encoderDrive(0.5, 48);
         sleep(sleepTime);
         encoderTurn90();
         sleep(sleepTime);
         encoderDrive(0.5, 12);
+
+
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
@@ -133,9 +135,30 @@ public class wirAutoLeftRedSpec extends LinearOpMode {
      *  2) Move runs out of time
      *  3) Driver stops the OpMode running.
      */
-    public void Score(){
-
+    public void Raiseelevator() {
+        int tickPostion = 2900;
+            robot.rightArm.setTargetPosition(tickPostion);
+            robot.leftArm.setTargetPosition(tickPostion);
+            robot.leftArm.setTargetPositionTolerance(10);
+            robot.rightArm.setTargetPositionTolerance(10);
+            robot.leftArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            robot.rightArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            robot.leftArm.setPower(1);
+            robot.rightArm.setPower(1);
     }
+    public void Elevatordown() {
+        int tickPostion = 0;
+        robot.rightArm.setTargetPosition(tickPostion);
+        robot.leftArm.setTargetPosition(tickPostion);
+        robot.leftArm.setTargetPositionTolerance(10);
+        robot.rightArm.setTargetPositionTolerance(10);
+        robot.leftArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.rightArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.leftArm.setPower(1);
+        robot.rightArm.setPower(1);
+    }
+
+
     public void encoderDrive(double speed, double inchTarget) {
         inchTarget *= 43;
         robot.rightBack.setTargetPosition((int) -inchTarget);
@@ -272,8 +295,78 @@ public class wirAutoLeftRedSpec extends LinearOpMode {
         robot.rightFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
+    public void encoderTurn45() {
+        int inchTarget = 550;
+        robot.rightBack.setTargetPosition((int) inchTarget);
+        robot.leftBack.setTargetPosition((int) -inchTarget);
+        robot.rightFront.setTargetPosition((int) inchTarget);
+        robot.leftFront.setTargetPosition((int) -inchTarget);
+
+        robot.rightBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.leftBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.rightFront.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.leftFront.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+        robot.rightBack.setPower(0.75);
+        robot.leftBack.setPower(0.75);
+        robot.rightFront.setPower(0.75);
+        robot.leftFront.setPower(0.75);
+
+        while (robot.rightFront.isBusy()|| robot.leftBack.isBusy()){
+            telemetry.addData("right F: ",robot.rightFront.getCurrentPosition());
+            telemetry.addData("left B: ",robot.leftBack.getCurrentPosition());
+            telemetry.addData("right B: ",robot.rightBack.getCurrentPosition());
+            telemetry.addData("left F: ",robot.leftFront.getCurrentPosition());
+            telemetry.update();
+        }
+        robot.leftBack.setPower(0);
+        robot.rightFront.setPower(0);
+        robot.leftFront.setPower(0);
+        robot.rightBack.setPower(0);
+
+
+        robot.rightBack.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        robot.leftBack.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        robot.rightFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        robot.leftFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    }
     public void encoderTurn90() {
         int inchTarget = 1100;
+        robot.rightBack.setTargetPosition((int) inchTarget);
+        robot.leftBack.setTargetPosition((int) -inchTarget);
+        robot.rightFront.setTargetPosition((int) inchTarget);
+        robot.leftFront.setTargetPosition((int) -inchTarget);
+
+        robot.rightBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.leftBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.rightFront.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.leftFront.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+        robot.rightBack.setPower(0.75);
+        robot.leftBack.setPower(0.75);
+        robot.rightFront.setPower(0.75);
+        robot.leftFront.setPower(0.75);
+
+        while (robot.rightFront.isBusy()|| robot.leftBack.isBusy()){
+            telemetry.addData("right F: ",robot.rightFront.getCurrentPosition());
+            telemetry.addData("left B: ",robot.leftBack.getCurrentPosition());
+            telemetry.addData("right B: ",robot.rightBack.getCurrentPosition());
+            telemetry.addData("left F: ",robot.leftFront.getCurrentPosition());
+            telemetry.update();
+        }
+        robot.leftBack.setPower(0);
+        robot.rightFront.setPower(0);
+        robot.leftFront.setPower(0);
+        robot.rightBack.setPower(0);
+
+
+        robot.rightBack.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        robot.leftBack.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        robot.rightFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        robot.leftFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    }
+    public void encoderTurn135() {
+        int inchTarget =1650 ;
         robot.rightBack.setTargetPosition((int) inchTarget);
         robot.leftBack.setTargetPosition((int) -inchTarget);
         robot.rightFront.setTargetPosition((int) inchTarget);

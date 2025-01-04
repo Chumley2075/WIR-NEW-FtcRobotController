@@ -60,10 +60,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="wirAutoLeftRedSpec", group="Robot")
+@Autonomous(name="wirAutoParkBlue", group="Robot")
 //@Disabled
 
-public class wirAutoLeftRedSpec extends LinearOpMode {
+public class wirAutoParkBlue extends LinearOpMode {
 
     /* Declare OpMode members. */
 
@@ -103,25 +103,9 @@ public class wirAutoLeftRedSpec extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         //3333.6 ticks = 6ft.
         //42 ticks per inch
-        encoderDrive(0.5, -12);
+        encoderDrive(0.5,-3 );
         sleep(sleepTime);
-        encoderStrafeleft(.5, 24);
-        sleep(sleepTime);
-        encoderTurn180();
-        sleep(sleepTime);
-        encoderDrive(0.5,12 );
-        sleep(sleepTime);
-        Score();
-        sleep(sleepTime);
-        encoderDrive(0.5, -12);
-        sleep(sleepTime);
-        encoderStrafeleft(0.5, 36);
-        sleep(sleepTime);
-        encoderDrive(0.5, 42);
-        sleep(sleepTime);
-        encoderTurn90();
-        sleep(sleepTime);
-        encoderDrive(0.5, 12);
+        encoderStrafeleft(0.5, 48);
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
