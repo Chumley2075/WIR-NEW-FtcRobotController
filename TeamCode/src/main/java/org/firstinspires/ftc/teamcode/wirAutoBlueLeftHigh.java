@@ -121,7 +121,7 @@ public class wirAutoBlueLeftHigh extends LinearOpMode {
         sleep(sleepTime);
         encoderTurn90();
         sleep(sleepTime);
-        encoderDrive(0.5, 12);
+        encoderDrive(0.5, 16);
 
 
         telemetry.addData("Path", "Complete");
