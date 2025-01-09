@@ -58,7 +58,7 @@ public class wirTeleop extends LinearOpMode {
     wirHardware robot = new wirHardware();
     ElapsedTime timer = new ElapsedTime();
      int tickPostion = 0;
-
+     double elbow = .84;
     @Override
     public void runOpMode() {
         double left;
@@ -93,6 +93,7 @@ public class wirTeleop extends LinearOpMode {
              telemetry.addData("currentRight: ",  robot.rightArm.getCurrentPosition());
             telemetry.addData("currentLeft: ",  robot.leftArm.getCurrentPosition());
             telemetry.addData("tickposition: ", tickPostion);
+            telemetry.addData("elbow: ", elbow);
             telemetry.update();
             // Run wheels in POV mode (note: The joystick goes negative when pushed forward, so negate it)
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
@@ -174,13 +175,11 @@ public class wirTeleop extends LinearOpMode {
             } else if (gamepad2.left_trigger > 0) {
                 robot.claw2.setPosition(0);
             }
-
+            robot.elbow.setPosition(elbow);
             if (gamepad2.dpad_right) {
-                robot.elbow.setPower(1);
+               elbow=.55;
             } else if (gamepad2.dpad_left) {
-                robot.elbow.setPower(-1);
-            } else {
-                robot.elbow.setPower(0);
+               elbow=.84;
             }
 
 

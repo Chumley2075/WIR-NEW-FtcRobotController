@@ -68,8 +68,9 @@ public class wirAutoBlueLeftHigh extends LinearOpMode {
     /* Declare OpMode members. */
 
     private ElapsedTime timer = new ElapsedTime();
-    public wirHardware robot = new wirHardware();
-
+    public wirHardwareAuto robot = new wirHardwareAuto();
+    double high = .55;
+    double low = .84;
 
     @Override
     public void runOpMode() {
@@ -94,6 +95,7 @@ public class wirAutoBlueLeftHigh extends LinearOpMode {
         robot.rightBack.setTargetPositionTolerance(tickTolerance);
         robot.leftBack.setTargetPositionTolerance(tickTolerance);
         // Wait for the game to start (driver presses START)
+
         waitForStart();
         robot.rightFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         robot.rightBack.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
@@ -110,18 +112,32 @@ public class wirAutoBlueLeftHigh extends LinearOpMode {
         encoderStraferight(0.5, 12);
         sleep(sleepTime);
         Raiseelevator();
-        sleep(2000);
+        robot.elbow.setPosition(0.6);
+        sleep(4000);
         encoderDrive(0.5, 6);
+        sleep(sleepTime);
+        robot.elbow.setPosition(high);
+        sleep(1000);
+        robot.claw2.setPosition(0);
+        sleep(1000);
+        robot.elbow.setPosition(.61);
+        sleep(sleepTime);
+        encoderDrive(.5, -3);
         sleep(sleepTime);
         Elevatordown();
         sleep(sleepTime);
         encoderTurn135();
         sleep(sleepTime);
-        encoderDrive(0.5, 48);
+        encoderStraferight(0.5, 11);
+        sleep(sleepTime);
+        encoderDrive(0.5, 40);
         sleep(sleepTime);
         encoderTurn90();
         sleep(sleepTime);
-        encoderDrive(0.5, 16);
+        encoderDrive(0.5, 14);
+        sleep(sleepTime);
+        robot.elbow.setPosition(0.55);
+        sleep(1500);
 
 
         telemetry.addData("Path", "Complete");
@@ -137,15 +153,16 @@ public class wirAutoBlueLeftHigh extends LinearOpMode {
      */
     public void Raiseelevator() {
         int tickPostion = 2900;
-            robot.rightArm.setTargetPosition(tickPostion);
-            robot.leftArm.setTargetPosition(tickPostion);
-            robot.leftArm.setTargetPositionTolerance(10);
-            robot.rightArm.setTargetPositionTolerance(10);
-            robot.leftArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-            robot.rightArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-            robot.leftArm.setPower(1);
-            robot.rightArm.setPower(1);
+        robot.rightArm.setTargetPosition(tickPostion);
+        robot.leftArm.setTargetPosition(tickPostion);
+        robot.leftArm.setTargetPositionTolerance(10);
+        robot.rightArm.setTargetPositionTolerance(10);
+        robot.leftArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.rightArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.leftArm.setPower(1);
+        robot.rightArm.setPower(1);
     }
+
     public void Elevatordown() {
         int tickPostion = 0;
         robot.rightArm.setTargetPosition(tickPostion);

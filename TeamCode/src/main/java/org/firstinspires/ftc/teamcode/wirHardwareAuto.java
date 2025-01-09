@@ -29,10 +29,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -55,7 +52,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  *
  */
 
-public class wirHardware {
+public class wirHardwareAuto {
 
 
     // Define Motor and Servo objects  (Make them private so they can't be accessed externally)
@@ -117,7 +114,8 @@ public class wirHardware {
 
         claw2.setPosition(1);
 
-        
+        elbow.setPosition(.84);
+
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         // leftArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
          //rightArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
