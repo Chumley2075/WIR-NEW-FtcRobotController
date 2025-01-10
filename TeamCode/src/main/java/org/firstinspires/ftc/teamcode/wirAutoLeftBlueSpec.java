@@ -68,8 +68,8 @@ public class wirAutoLeftBlueSpec extends LinearOpMode {
     /* Declare OpMode members. */
 
     private ElapsedTime timer = new ElapsedTime();
-    public wirHardware robot = new wirHardware();
-
+    public wirHardwareAuto robot = new wirHardwareAuto();
+    int sleepTime =500;
 
     @Override
     public void runOpMode() {
@@ -109,19 +109,22 @@ public class wirAutoLeftBlueSpec extends LinearOpMode {
         sleep(sleepTime);
         encoderTurn180();
         sleep(sleepTime);
-        encoderDrive(0.5,12 );
+        encoderDrive(0.5,7);
         sleep(sleepTime);
         Score();
         sleep(sleepTime);
-        encoderDrive(0.5, -12);
+        encoderDrive(0.5, -8);
         sleep(sleepTime);
-        encoderStrafeleft(0.5, 36);
+        encoderStrafeleft(0.5, 30);
         sleep(sleepTime);
-        encoderDrive(0.5, 42);
+        encoderDrive(0.5, 48);
         sleep(sleepTime);
         encoderTurn90();
         sleep(sleepTime);
-        encoderDrive(0.5, 12);
+        encoderDrive(0.5, 19);
+        sleep(sleepTime);
+        robot.elbow.setPosition(0.55);
+        sleep(1500);
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
@@ -134,7 +137,26 @@ public class wirAutoLeftBlueSpec extends LinearOpMode {
      *  3) Driver stops the OpMode running.
      */
     public void Score(){
-
+        robot.elbow.setPosition(.55);
+        sleep(3000);
+        Raiseelevator();
+        sleep(4000);
+        robot.claw2.setPosition(0);
+        sleep(sleepTime);
+        Elevatordown();
+        robot.elbow.setPosition(0.61);
+        sleep(sleepTime);
+    }
+    public void Elevatordown() {
+        int tickPostion = 0;
+        robot.rightArm.setTargetPosition(tickPostion);
+        robot.leftArm.setTargetPosition(tickPostion);
+        robot.leftArm.setTargetPositionTolerance(10);
+        robot.rightArm.setTargetPositionTolerance(10);
+        robot.leftArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.rightArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.leftArm.setPower(1);
+        robot.rightArm.setPower(1);
     }
     public void encoderDrive(double speed, double inchTarget) {
         inchTarget *= 43;
@@ -204,6 +226,18 @@ public class wirAutoLeftBlueSpec extends LinearOpMode {
         robot.rightFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
+    public void Raiseelevator() {
+        int tickPostion = 1200;
+        robot.rightArm.setTargetPosition(tickPostion);
+        robot.leftArm.setTargetPosition(tickPostion);
+        robot.leftArm.setTargetPositionTolerance(10);
+        robot.rightArm.setTargetPositionTolerance(10);
+        robot.leftArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.rightArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.leftArm.setPower(1);
+        robot.rightArm.setPower(1);
+    }
+
     public void encoderStraferight(double speed, double inchTarget) {
         inchTarget *= 48;
         robot.rightBack.setTargetPosition((int) -inchTarget);

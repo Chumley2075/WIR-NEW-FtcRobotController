@@ -154,17 +154,15 @@ public class wirTeleop extends LinearOpMode {
             if (gamepad2.y) {
                 tickPostion = 2900;
             }else if(gamepad2.a){
-                tickPostion = 20;
+                tickPostion = 450;
             }else if (gamepad2.x) {
                 tickPostion = 1400;
-            }else if (gamepad2.b){
-                tickPostion =1000;
-            }else if (gamepad2.left_bumper && tickPostion >= 50) {
+            }else if (gamepad2.left_bumper) {
                 if (timer.milliseconds() > 50) {
                     tickPostion -= 50;
                     timer.reset();
                 }
-            }else if (gamepad2.right_bumper && tickPostion <= 3000) {
+            }else if (gamepad2.right_bumper) {
                 if (timer.milliseconds() > 50) {
                     tickPostion += 50;
                     timer.reset();
@@ -176,10 +174,16 @@ public class wirTeleop extends LinearOpMode {
                 robot.claw2.setPosition(0);
             }
             robot.elbow.setPosition(elbow);
-            if (gamepad2.dpad_right) {
-               elbow=.55;
-            } else if (gamepad2.dpad_left) {
-               elbow=.84;
+            if (gamepad2.dpad_left && elbow<1) {
+                if (timer.milliseconds() > 100) {
+                    elbow += .01;
+                    timer.reset();
+                }
+            } else if (gamepad2.dpad_right &&elbow >0) {
+                if (timer.milliseconds() > 100) {
+                    elbow -= .01;
+                    timer.reset();
+                }
             }
 
 

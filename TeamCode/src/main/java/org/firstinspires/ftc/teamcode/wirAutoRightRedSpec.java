@@ -68,7 +68,8 @@ public class wirAutoRightRedSpec extends LinearOpMode {
     /* Declare OpMode members. */
 
     private ElapsedTime timer = new ElapsedTime();
-    public wirHardware robot = new wirHardware();
+    public wirHardwareAuto robot = new wirHardwareAuto();
+    int sleepTime = 500;
 
 
     @Override
@@ -109,7 +110,7 @@ public class wirAutoRightRedSpec extends LinearOpMode {
         sleep(sleepTime);
         encoderTurn180();
         sleep(sleepTime);
-        encoderDrive(0.5,8);
+        encoderDrive(0.5,7);
         sleep(sleepTime);
         Score();
         sleep(sleepTime);
@@ -128,6 +129,16 @@ public class wirAutoRightRedSpec extends LinearOpMode {
      *  3) Driver stops the OpMode running.
      */
     public void Score(){
+        robot.elbow.setPosition(.55);
+        sleep(3000);
+        Raiseelevator();
+        sleep(4000);
+        robot.claw2.setPosition(0);
+        sleep(sleepTime);
+        Elevatordown();
+        robot.elbow.setPosition(0.61);
+        sleep(sleepTime);
+
 
     }
     public void encoderDrive(double speed, double inchTarget) {
@@ -165,6 +176,29 @@ public class wirAutoRightRedSpec extends LinearOpMode {
         robot.rightFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
+    public void Elevatordown() {
+        int tickPostion = 0;
+        robot.rightArm.setTargetPosition(tickPostion);
+        robot.leftArm.setTargetPosition(tickPostion);
+        robot.leftArm.setTargetPositionTolerance(10);
+        robot.rightArm.setTargetPositionTolerance(10);
+        robot.leftArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.rightArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.leftArm.setPower(1);
+        robot.rightArm.setPower(1);
+    }
+    public void Raiseelevator() {
+        int tickPostion = 1200;
+        robot.rightArm.setTargetPosition(tickPostion);
+        robot.leftArm.setTargetPosition(tickPostion);
+        robot.leftArm.setTargetPositionTolerance(10);
+        robot.rightArm.setTargetPositionTolerance(10);
+        robot.leftArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.rightArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        robot.leftArm.setPower(1);
+        robot.rightArm.setPower(1);
+    }
+
     public void encoderStrafeleft(double speed, double inchTarget) {
         inchTarget *= 48;
         robot.rightBack.setTargetPosition((int) inchTarget);

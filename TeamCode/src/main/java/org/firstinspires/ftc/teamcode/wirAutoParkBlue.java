@@ -68,7 +68,7 @@ public class wirAutoParkBlue extends LinearOpMode {
     /* Declare OpMode members. */
 
     private ElapsedTime timer = new ElapsedTime();
-    public wirHardware robot = new wirHardware();
+    public wirHardwareAuto robot = new wirHardwareAuto();
 
 
     @Override
