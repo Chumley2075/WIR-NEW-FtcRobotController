@@ -141,8 +141,8 @@ public class wirTeleop extends LinearOpMode {
 */
             robot.rightArm.setTargetPosition(tickPostion);
             robot.leftArm.setTargetPosition(tickPostion);
-            robot.leftArm.setTargetPositionTolerance(10);
-            robot.rightArm.setTargetPositionTolerance(10);
+            robot.leftArm.setTargetPositionTolerance(20);
+            robot.rightArm.setTargetPositionTolerance(20);
             robot.leftArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             robot.rightArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             robot.leftArm.setPower(1);
