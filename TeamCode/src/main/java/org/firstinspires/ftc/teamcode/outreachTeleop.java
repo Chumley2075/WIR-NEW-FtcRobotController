@@ -54,11 +54,11 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="TeLeOp", group="Robot")
 //@Disabled
-public class wirTeleop extends LinearOpMode {
+public class outreachTeleop extends LinearOpMode {
     wirHardware robot = new wirHardware();
     ElapsedTime timer = new ElapsedTime();
-     int tickPostion = 0;
-     double elbow = .84;
+    int tickPostion = 0;
+    double elbow = .84;
     @Override
     public void runOpMode() {
         double left;
@@ -90,7 +90,7 @@ public class wirTeleop extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             //   telemetry.addData("TickPosition",  tickPostion);
-             telemetry.addData("currentRight: ",  robot.rightArm.getCurrentPosition());
+            telemetry.addData("currentRight: ",  robot.rightArm.getCurrentPosition());
             telemetry.addData("currentLeft: ",  robot.leftArm.getCurrentPosition());
             telemetry.addData("tickposition: ", tickPostion);
             telemetry.addData("elbow: ", elbow);
@@ -151,7 +151,7 @@ public class wirTeleop extends LinearOpMode {
             //2900 high basket
             //1060 high specimen
 
-            if (gamepad2.y) {
+           /* if (gamepad2.y) {
                 tickPostion = 2900;
             }else if(gamepad2.a){
                 tickPostion = 450;
@@ -185,14 +185,14 @@ public class wirTeleop extends LinearOpMode {
                     timer.reset();
                 }
             }
-
+*/
 
 
 
 
         }
     }
- }
+}
 
 
 //left in 1

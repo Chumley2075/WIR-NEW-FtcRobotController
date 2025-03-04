@@ -76,7 +76,7 @@ public class wirAutoLeftBlueSpec extends LinearOpMode {
 
 
         // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Ready to start", "");
+      /*  telemetry.addData("Ready to start", "");
         telemetry.update();
         robot.init(hardwareMap);
         robot.rightFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -93,12 +93,23 @@ public class wirAutoLeftBlueSpec extends LinearOpMode {
         robot.leftFront.setTargetPositionTolerance(tickTolerance);
         robot.rightBack.setTargetPositionTolerance(tickTolerance);
         robot.leftBack.setTargetPositionTolerance(tickTolerance);
-        // Wait for the game to start (driver presses START)
+      */  // Wait for the game to start (driver presses START)
+        boolean bool = true;
+
+
+
         waitForStart();
         robot.rightFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         robot.rightBack.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftBack.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        while (bool) {
+            telemetry.addData("frontleft", robot.leftFront.getCurrentPosition());
+            telemetry.addData("frontright", robot.rightFront.getCurrentPosition());
+            telemetry.addData("backleft", robot.leftBack.getCurrentPosition());
+            telemetry.addData("backright", robot.rightBack.getCurrentPosition());
+            telemetry.update();
+        }
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         //3333.6 ticks = 6ft.
@@ -109,7 +120,7 @@ public class wirAutoLeftBlueSpec extends LinearOpMode {
         sleep(sleepTime);
         encoderTurn180();
         sleep(sleepTime);
-        encoderDrive(0.5,7);
+        encoderDrive(0.5,9);
         sleep(sleepTime);
         Score();
         sleep(sleepTime);
@@ -272,7 +283,7 @@ public class wirAutoLeftBlueSpec extends LinearOpMode {
         robot.leftFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
     public void encoderTurn180() {
-        int inchTarget = 2200;
+        int inchTarget = 2100;
         robot.rightBack.setTargetPosition((int) -inchTarget);
         robot.leftBack.setTargetPosition((int) inchTarget);
         robot.rightFront.setTargetPosition((int) -inchTarget);

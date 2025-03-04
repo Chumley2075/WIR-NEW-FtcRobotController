@@ -110,7 +110,7 @@ public class wirAutoRightBlueSpec extends LinearOpMode {
         sleep(sleepTime);
         encoderTurn180();
         sleep(sleepTime);
-        encoderDrive(0.5,7);
+        encoderDrive(0.5,9);
         sleep(sleepTime);
         Score();
         sleep(sleepTime);
@@ -188,7 +188,7 @@ public class wirAutoRightBlueSpec extends LinearOpMode {
         robot.rightArm.setPower(1);
     }
     public void Raiseelevator() {
-        int tickPostion = 1000;
+        int tickPostion = 1200;
         robot.rightArm.setTargetPosition(tickPostion);
         robot.leftArm.setTargetPosition(tickPostion);
         robot.leftArm.setTargetPositionTolerance(10);
@@ -266,7 +266,7 @@ public class wirAutoRightBlueSpec extends LinearOpMode {
         robot.leftFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
     public void encoderTurn180() {
-        int inchTarget = 2250;
+        int inchTarget = 2100;
         robot.rightBack.setTargetPosition((int) -inchTarget);
         robot.leftBack.setTargetPosition((int) inchTarget);
         robot.rightFront.setTargetPosition((int) -inchTarget);

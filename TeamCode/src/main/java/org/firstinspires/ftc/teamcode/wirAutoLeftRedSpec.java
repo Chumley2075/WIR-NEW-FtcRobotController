@@ -103,13 +103,13 @@ public class wirAutoLeftRedSpec extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         //3333.6 ticks = 6ft.
         //42 ticks per inch
-        encoderDrive(0.5, -12);
+        encoderDrive(0.5, 12);
         sleep(sleepTime);
         encoderStrafeleft(.5, 24);
         sleep(sleepTime);
         encoderTurn180();
         sleep(sleepTime);
-        encoderDrive(0.5,7);
+        encoderDrive(0.5,-7);
         sleep(sleepTime);
         Score();
         sleep(sleepTime);
@@ -160,10 +160,10 @@ public class wirAutoLeftRedSpec extends LinearOpMode {
     }
     public void encoderDrive(double speed, double inchTarget) {
         inchTarget *= 43;
-        robot.rightBack.setTargetPosition((int) -inchTarget);
-        robot.leftBack.setTargetPosition((int) -inchTarget);
-        robot.rightFront.setTargetPosition((int) -inchTarget);
-        robot.leftFront.setTargetPosition((int) -inchTarget);
+        robot.rightBack.setTargetPosition((int) inchTarget);
+        robot.leftBack.setTargetPosition((int) inchTarget);
+        robot.rightFront.setTargetPosition((int) inchTarget);
+        robot.leftFront.setTargetPosition((int) inchTarget);
 
         robot.rightBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         robot.leftBack.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
@@ -342,7 +342,3 @@ public class wirAutoLeftRedSpec extends LinearOpMode {
         robot.leftFront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
 }
-
-
-
-

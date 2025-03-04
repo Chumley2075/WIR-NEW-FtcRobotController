@@ -114,7 +114,7 @@ public class wirAutoBlueLeftHigh extends LinearOpMode {
         Raiseelevator();
         robot.elbow.setPosition(0.6);
         sleep(4000);
-        encoderDrive(0.5, 6);
+        encoderDrive(0.5, 8);
         sleep(sleepTime);
         robot.elbow.setPosition(high);
         sleep(1000);
