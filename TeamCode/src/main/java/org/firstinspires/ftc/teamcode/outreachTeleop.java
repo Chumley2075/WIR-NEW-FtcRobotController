@@ -55,10 +55,11 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name="TeLeOp", group="Robot")
 //@Disabled
 public class outreachTeleop extends LinearOpMode {
-    wirHardware robot = new wirHardware();
+    outreachHardware robot = new outreachHardware();
     ElapsedTime timer = new ElapsedTime();
     int tickPostion = 0;
     double elbow = .84;
+
     @Override
     public void runOpMode() {
         double left;
@@ -73,8 +74,6 @@ public class outreachTeleop extends LinearOpMode {
         robot.init(hardwareMap);
         //  robot.leftArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         // robot.rightArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        robot.leftArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        robot.rightArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         robot.leftFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         robot.leftBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         robot.rightBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -82,16 +81,10 @@ public class outreachTeleop extends LinearOpMode {
         // Wait for the game to start (driver presses START)
         waitForStart();
         timer.reset();
-        robot.leftArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        robot.rightArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        robot.leftArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        robot.rightArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         //  timer.reset();
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             //   telemetry.addData("TickPosition",  tickPostion);
-            telemetry.addData("currentRight: ",  robot.rightArm.getCurrentPosition());
-            telemetry.addData("currentLeft: ",  robot.leftArm.getCurrentPosition());
             telemetry.addData("tickposition: ", tickPostion);
             telemetry.addData("elbow: ", elbow);
             telemetry.update();
@@ -127,73 +120,9 @@ public class outreachTeleop extends LinearOpMode {
                 robot.leftBack.setPower(left);
                 robot.rightBack.setPower(right);
             }
-/*
-            if (gamepad2.dpad_up) {
-                robot.rightArm.setPower(1);
-                robot.leftArm.setPower(1);
-            } else if (gamepad2.dpad_down) {
-                robot.rightArm.setPower(-1);
-                robot.leftArm.setPower(-1);
-            } else {
-                robot.rightArm.setPower(0);
-                robot.leftArm.setPower(0);
-            }
-*/
-            robot.rightArm.setTargetPosition(tickPostion);
-            robot.leftArm.setTargetPosition(tickPostion);
-            robot.leftArm.setTargetPositionTolerance(10);
-            robot.rightArm.setTargetPositionTolerance(10);
-            robot.leftArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-            robot.rightArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-            robot.leftArm.setPower(1);
-            robot.rightArm.setPower(1);
-
-            //2900 high basket
-            //1060 high specimen
-
-           /* if (gamepad2.y) {
-                tickPostion = 2900;
-            }else if(gamepad2.a){
-                tickPostion = 450;
-            }else if (gamepad2.x) {
-                tickPostion = 1400;
-            }else if (gamepad2.left_bumper) {
-                if (timer.milliseconds() > 50) {
-                    tickPostion -= 50;
-                    timer.reset();
-                }
-            }else if (gamepad2.right_bumper) {
-                if (timer.milliseconds() > 50) {
-                    tickPostion += 50;
-                    timer.reset();
-                }
-            }
-            if (gamepad2.right_trigger > 0) {
-                robot.claw2.setPosition(1);
-            } else if (gamepad2.left_trigger > 0) {
-                robot.claw2.setPosition(0);
-            }
-            robot.elbow.setPosition(elbow);
-            if (gamepad2.dpad_left && elbow<1) {
-                if (timer.milliseconds() > 100) {
-                    elbow += .01;
-                    timer.reset();
-                }
-            } else if (gamepad2.dpad_right &&elbow >0.22) {
-                if (timer.milliseconds() > 100) {
-                    elbow -= .01;
-                    timer.reset();
-                }
-            }
-*/
-
-
-
-
         }
     }
 }
-
 
 //left in 1
 //right in 0
