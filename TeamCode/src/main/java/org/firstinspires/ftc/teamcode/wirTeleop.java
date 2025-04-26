@@ -52,13 +52,13 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="TeLeOp", group="Robot")
+@TeleOp(name="TeLeOpRY", group="Robot")
 //@Disabled
 public class wirTeleop extends LinearOpMode {
     wirHardware robot = new wirHardware();
     ElapsedTime timer = new ElapsedTime();
      int tickPostion = 0;
-     double elbow = .84;
+     double elbow = .6;
     @Override
     public void runOpMode() {
         double left;
@@ -98,8 +98,8 @@ public class wirTeleop extends LinearOpMode {
             // Run wheels in POV mode (note: The joystick goes negative when pushed forward, so negate it)
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
             // This way it's also easy to just drive straight, or just turn.
-            drive = Math.cbrt(gamepad1.left_stick_y);
-            turn = Math.cbrt(-gamepad1.right_stick_x);
+            drive = Math.cbrt(gamepad1.left_stick_y)*.5;
+            turn = Math.cbrt(-gamepad1.right_stick_x)*.5;
 
             // Combine drive and turn for blended motion.1
             left = drive + turn;
@@ -141,8 +141,8 @@ public class wirTeleop extends LinearOpMode {
 */
             robot.rightArm.setTargetPosition(tickPostion);
             robot.leftArm.setTargetPosition(tickPostion);
-            robot.leftArm.setTargetPositionTolerance(20);
-            robot.rightArm.setTargetPositionTolerance(20);
+            robot.leftArm.setTargetPositionTolerance(40);
+            robot.rightArm.setTargetPositionTolerance(40);
             robot.leftArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             robot.rightArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             robot.leftArm.setPower(1);
@@ -151,13 +151,14 @@ public class wirTeleop extends LinearOpMode {
             //2900 high basket
             //1060 high specimen
 
-            if (gamepad2.y) {
-                tickPostion = 2900;
-            }else if(gamepad2.a){
-                tickPostion = 450;
-            }else if (gamepad2.x) {
-                tickPostion = 1400;
-            }else if (gamepad2.left_bumper) {
+//            if (gamepad2.y) {
+//                tickPostion = 2800;
+//            }else if(gamepad2.a){
+//                tickPostion = 550;
+//            }else if (gamepad2.x) {
+//                tickPostion = 1400;
+//            }
+            if (gamepad2.left_bumper) {
                 if (timer.milliseconds() > 50) {
                     tickPostion -= 50;
                     timer.reset();
