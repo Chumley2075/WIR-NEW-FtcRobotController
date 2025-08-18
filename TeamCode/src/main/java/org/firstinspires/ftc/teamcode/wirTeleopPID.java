@@ -29,16 +29,12 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.arcrobotics.ftclib.controller.wpilibcontroller.ElevatorFeedforward;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 /*
  * This OpMode executes a POV Game style Teleop for a direct drive robot
@@ -54,9 +50,10 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="TeLeOpRY", group="Robot")
 //@Disabled
-public class wirTeleop extends LinearOpMode {
+public class wirTeleopPID extends LinearOpMode {
     wirHardware robot = new wirHardware();
     ElapsedTime timer = new ElapsedTime();
+
      int tickPostion = 0;
      double elbow = .6;
     @Override
@@ -71,10 +68,8 @@ public class wirTeleop extends LinearOpMode {
         telemetry.addData(">", "Robot Ready.  Press START.");    //
         telemetry.update();
         robot.init(hardwareMap);
-        //  robot.leftArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        // robot.rightArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        robot.leftArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        robot.rightArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+       elevatorPID elevator = new elevatorPID(hardwareMap);
+
         robot.leftFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         robot.leftBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         robot.rightBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -82,15 +77,12 @@ public class wirTeleop extends LinearOpMode {
         // Wait for the game to start (driver presses START)
         waitForStart();
         timer.reset();
-        robot.leftArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        robot.rightArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        robot.leftArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        robot.rightArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+
         //  timer.reset();
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             //   telemetry.addData("TickPosition",  tickPostion);
-             telemetry.addData("currentRight: ",  robot.rightArm.getCurrentPosition());
+            telemetry.addData("currentRight: ",  robot.rightArm.getCurrentPosition());
             telemetry.addData("currentLeft: ",  robot.leftArm.getCurrentPosition());
             telemetry.addData("tickposition: ", tickPostion);
             telemetry.addData("elbow: ", elbow);
@@ -98,8 +90,8 @@ public class wirTeleop extends LinearOpMode {
             // Run wheels in POV mode (note: The joystick goes negative when pushed forward, so negate it)
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
             // This way it's also easy to just drive straight, or just turn.
-            drive = Math.cbrt(gamepad1.left_stick_y)*.5;
-            turn = Math.cbrt(-gamepad1.right_stick_x)*.5;
+            drive = Math.cbrt(gamepad1.left_stick_y)*.75;
+            turn = Math.cbrt(-gamepad1.right_stick_x)*.75;
 
             // Combine drive and turn for blended motion.1
             left = drive + turn;
@@ -127,47 +119,27 @@ public class wirTeleop extends LinearOpMode {
                 robot.leftBack.setPower(left);
                 robot.rightBack.setPower(right);
             }
-/*
-            if (gamepad2.dpad_up) {
-                robot.rightArm.setPower(1);
-                robot.leftArm.setPower(1);
-            } else if (gamepad2.dpad_down) {
-                robot.rightArm.setPower(-1);
-                robot.leftArm.setPower(-1);
-            } else {
-                robot.rightArm.setPower(0);
-                robot.leftArm.setPower(0);
-            }
-*/
-            robot.rightArm.setTargetPosition(tickPostion);
-            robot.leftArm.setTargetPosition(tickPostion);
-            robot.leftArm.setTargetPositionTolerance(40);
-            robot.rightArm.setTargetPositionTolerance(40);
-            robot.leftArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-            robot.rightArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-            robot.leftArm.setPower(1);
-            robot.rightArm.setPower(1);
 
             //2900 high basket
             //1060 high specimen    
 
             if (gamepad2.y) {
-                tickPostion = 2800;
+                elevator.goToPosition(2800);
             }else if(gamepad2.a){
-                tickPostion = 600;
-           }else if (gamepad2.x) {
-                tickPostion = 1400;
+                elevator.goToPosition(100);
+            }else if (gamepad2.x) {
+                elevator.goToPosition(1400);
             }
-            if (gamepad2.left_bumper) {
-                if (timer.milliseconds() > 50) {
-                    tickPostion -= 50;
-                    timer.reset();
-                }
-            }else if (gamepad2.right_bumper) {
-                if (timer.milliseconds() > 50) {
-                    tickPostion += 50;
-                    timer.reset();
-                }
+if(gamepad2.right_bumper){
+    robot.leftArm.setPower(0);
+    robot.rightArm.setPower(0);
+
+    robot.leftArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    robot.rightArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    robot.leftArm.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+    robot.rightArm.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+
+}
             }
             if (gamepad2.right_trigger > 0) {
                 robot.claw2.setPosition(1);
@@ -186,14 +158,16 @@ public class wirTeleop extends LinearOpMode {
                     timer.reset();
                 }
             }
+elevator.update();
 
+        telemetry.addData("Elevator Pos", elevator.getPosition());
 
-
+        telemetry.update();
 
 
         }
     }
- }
+
 
 
 //left in 1
