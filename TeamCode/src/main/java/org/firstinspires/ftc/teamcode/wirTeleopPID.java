@@ -48,14 +48,15 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="TeLeOpRY", group="Robot")
+@TeleOp(name="PIDTeleopNEW", group="Robot")
 //@Disabled
 public class wirTeleopPID extends LinearOpMode {
     wirHardware robot = new wirHardware();
     ElapsedTime timer = new ElapsedTime();
 
-     int tickPostion = 0;
-     double elbow = .6;
+    int tickPostion = 0;
+    double elbow = .6;
+
     @Override
     public void runOpMode() {
         double left;
@@ -68,7 +69,7 @@ public class wirTeleopPID extends LinearOpMode {
         telemetry.addData(">", "Robot Ready.  Press START.");    //
         telemetry.update();
         robot.init(hardwareMap);
-       elevatorPID elevator = new elevatorPID(hardwareMap);
+        elevatorPID elevator = new elevatorPID(robot);
 
         robot.leftFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         robot.leftBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -82,16 +83,16 @@ public class wirTeleopPID extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             //   telemetry.addData("TickPosition",  tickPostion);
-            telemetry.addData("currentRight: ",  robot.rightArm.getCurrentPosition());
-            telemetry.addData("currentLeft: ",  robot.leftArm.getCurrentPosition());
+            telemetry.addData("currentRight: ", robot.rightArm.getCurrentPosition());
+            telemetry.addData("currentLeft: ", robot.leftArm.getCurrentPosition());
             telemetry.addData("tickposition: ", tickPostion);
             telemetry.addData("elbow: ", elbow);
-            telemetry.update();
+
             // Run wheels in POV mode (note: The joystick goes negative when pushed forward, so negate it)
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
             // This way it's also easy to just drive straight, or just turn.
-            drive = Math.cbrt(gamepad1.left_stick_y)*.75;
-            turn = Math.cbrt(-gamepad1.right_stick_x)*.75;
+            drive = Math.cbrt(gamepad1.left_stick_y) * .75;
+            turn = Math.cbrt(-gamepad1.right_stick_x) * .75;
 
             // Combine drive and turn for blended motion.1
             left = drive + turn;
@@ -124,50 +125,56 @@ public class wirTeleopPID extends LinearOpMode {
             //1060 high specimen    
 
             if (gamepad2.y) {
-                elevator.goToPosition(2800);
-            }else if(gamepad2.a){
-                elevator.goToPosition(100);
-            }else if (gamepad2.x) {
-                elevator.goToPosition(1400);
+                elevator.setTargetPosition(2800);
+            } else if (gamepad2.a) {
+                elevator.setTargetPosition(0);
+            } else if (gamepad2.x) {
+                elevator.setTargetPosition(1400);
             }
-if(gamepad2.right_bumper){
-    robot.leftArm.setPower(0);
-    robot.rightArm.setPower(0);
+            if (gamepad2.right_bumper) {
+                robot.leftArm.setPower(0);
+                robot.rightArm.setPower(0);
 
-    robot.leftArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-    robot.rightArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-    robot.leftArm.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-    robot.rightArm.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+                robot.leftArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+                robot.rightArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+                robot.leftArm.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+                robot.rightArm.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
-}
             }
+
             if (gamepad2.right_trigger > 0) {
                 robot.claw2.setPosition(1);
             } else if (gamepad2.left_trigger > 0) {
                 robot.claw2.setPosition(0);
             }
             robot.elbow.setPosition(elbow);
-            if (gamepad2.dpad_left && elbow<1) {
+            if (gamepad2.dpad_left && elbow < .51) {
                 if (timer.milliseconds() > 100) {
-                    elbow += .01;
+                    elbow += .02;
                     timer.reset();
                 }
-            } else if (gamepad2.dpad_right &&elbow >0.22) {
+            } else if (gamepad2.dpad_right && elbow > 0.22) {
                 if (timer.milliseconds() > 100) {
-                    elbow -= .01;
+                    elbow -= .02;
                     timer.reset();
                 }
             }
-elevator.update();
+            elevator.update();
 
-        telemetry.addData("Elevator Pos", elevator.getPosition());
+            if (elevator.atPosition()) {
+                telemetry.addLine("Elevator is in position");
+            } else {
+                telemetry.addLine("Elevator moving...");
+            }
 
-        telemetry.update();
+            telemetry.addData("Elevator Pos", elevator.getCurrentPos());
+
+            telemetry.update();
 
 
         }
     }
-
+}
 
 
 //left in 1

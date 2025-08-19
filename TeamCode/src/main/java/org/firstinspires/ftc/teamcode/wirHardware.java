@@ -116,18 +116,9 @@ public class wirHardware {
         rightArm.setPower(0);
 
         claw2.setPosition(1);
-
+        elbow.setPosition(.51);
         
-        // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
-        // leftArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-         //rightArm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-/*
-        // Define and initialize ALL installed servos.
-        leftHand = myOpMode.hardwareMap.get(Servo.class, "left_hand");
-        rightHand = myOpMode.hardwareMap.get(Servo.class, "right_hand");
-        leftHand.setPosition(MID_SERVO);
-        rightHand.setPosition(MID_SERVO);
-*/
+
     
     }
 
