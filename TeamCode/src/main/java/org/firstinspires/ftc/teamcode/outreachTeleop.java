@@ -52,7 +52,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="teleopOutReach", group="Robot")
+@TeleOp(name="outReachArmDisabled", group="Robot")
 //@Disabled
 public class outreachTeleop extends LinearOpMode {
     outreachHardware robot = new outreachHardware();

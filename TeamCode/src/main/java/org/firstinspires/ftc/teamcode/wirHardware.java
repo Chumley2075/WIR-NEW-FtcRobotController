@@ -116,7 +116,7 @@ public class wirHardware {
         rightArm.setPower(0);
 
         claw2.setPosition(1);
-        elbow.setPosition(.51);
+        elbow.setPosition(.5);
         
 
     

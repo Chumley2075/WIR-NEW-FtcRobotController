@@ -34,6 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -52,13 +53,13 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="TeLeOpRY", group="Robot")
+@TeleOp(name="OutReachArmEnabled", group="Robot")
 //@Disabled
 public class wirTeleop extends LinearOpMode {
     wirHardware robot = new wirHardware();
     ElapsedTime timer = new ElapsedTime();
      int tickPostion = 0;
-     double elbow = .6;
+     double elbow = .5;
     @Override
     public void runOpMode() {
         double left;
@@ -71,6 +72,7 @@ public class wirTeleop extends LinearOpMode {
         telemetry.addData(">", "Robot Ready.  Press START.");    //
         telemetry.update();
         robot.init(hardwareMap);
+
         //  robot.leftArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         // robot.rightArm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -138,15 +140,18 @@ public class wirTeleop extends LinearOpMode {
                 robot.rightArm.setPower(0);
                 robot.leftArm.setPower(0);
             }
-*/
-            robot.rightArm.setTargetPosition(tickPostion);
+
+*/          robot.leftArm.setTargetPositionTolerance(15);
+            robot.rightArm.setTargetPositionTolerance(15);
             robot.leftArm.setTargetPosition(tickPostion);
-            robot.leftArm.setTargetPositionTolerance(40);
-            robot.rightArm.setTargetPositionTolerance(40);
-            robot.leftArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            robot.rightArm.setTargetPosition(tickPostion);
             robot.rightArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-            robot.leftArm.setPower(1);
-            robot.rightArm.setPower(1);
+            robot.rightArm.setPower(.75);
+            robot.leftArm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            robot.leftArm.setPower(.75);
+
+
+
 
             //2900 high basket
             //1060 high specimen    
@@ -154,16 +159,17 @@ public class wirTeleop extends LinearOpMode {
             if (gamepad2.y) {
                 tickPostion = 2800;
             }else if(gamepad2.a){
-                tickPostion = 600;
+                tickPostion = 15;
            }else if (gamepad2.x) {
                 tickPostion = 1400;
             }
-            if (gamepad2.left_bumper) {
+
+            if (gamepad2.dpad_down && tickPostion> 50) {
                 if (timer.milliseconds() > 50) {
                     tickPostion -= 50;
                     timer.reset();
                 }
-            }else if (gamepad2.right_bumper) {
+            }else if (gamepad2.dpad_up&& tickPostion <2900) {
                 if (timer.milliseconds() > 50) {
                     tickPostion += 50;
                     timer.reset();
@@ -175,14 +181,14 @@ public class wirTeleop extends LinearOpMode {
                 robot.claw2.setPosition(0);
             }
             robot.elbow.setPosition(elbow);
-            if (gamepad2.dpad_left && elbow<1) {
+            if (gamepad2.dpad_left && elbow<.5) {
                 if (timer.milliseconds() > 100) {
-                    elbow += .01;
+                    elbow += .02;
                     timer.reset();
                 }
             } else if (gamepad2.dpad_right &&elbow >0.22) {
                 if (timer.milliseconds() > 100) {
-                    elbow -= .01;
+                    elbow -= .02;
                     timer.reset();
                 }
             }

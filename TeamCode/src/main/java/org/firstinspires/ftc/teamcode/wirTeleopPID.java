@@ -55,7 +55,7 @@ public class wirTeleopPID extends LinearOpMode {
     ElapsedTime timer = new ElapsedTime();
 
     int tickPostion = 0;
-    double elbow = .6;
+    double elbow = .5;
 
     @Override
     public void runOpMode() {
